@@ -5,7 +5,8 @@ select count(a.emp_no)
  where a.emp_no = b.emp_no
    and b.salary > (select avg(salary)
 					   from salaries
-					  where to_date = '9999-01-01');
+					  where to_date = '9999-01-01')
+   and to_date = '9999-01-01';
 
 
 -- 2. 현재, 각 부서별로 최고의 급여를 받는 사원의 사번, 이름, 부서 연봉을 조회하세요. 단 조회결과는 연봉의 내림차순으로 정렬되어 나타나야 합니다. 
