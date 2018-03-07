@@ -34,6 +34,7 @@ from employees a, salaries b, dept_emp c, (select avg(c.salary) as 'avg_salary',
 where a.emp_no = b.emp_no
 and a.emp_no = c.emp_no
 and b.to_date = '9999-01-01'
+and c.to_date = '9999-01-01'
 and c.dept_no = d.b_no
 and b.salary > d.avg_salary;
 
