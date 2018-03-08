@@ -12,14 +12,20 @@ select count(a.emp_no)
 -- 2. 현재, 각 부서별로 최고의 급여를 받는 사원의 사번, 이름, 부서 연봉을 조회하세요. 단 조회결과는 연봉의 내림차순으로 정렬되어 나타나야 합니다. 
 
   select a.emp_no as '사번', concat(a.first_name, ' ',a.last_name) as '이름', b.dept_no as '부서', c.salary as '연봉'
-    from employees a, dept_emp b, salaries c
+    from employees a, dept_emp b, salaries c, (select max(salary) as 'max_salary', dept_no
+												 from employees a, dept_emp b, salaries c
+												where a.emp_no = b.emp_no
+												  and a.emp_no = c.emp_no
+												  and b.to_date = '9999-01-01'
+											 group by dept_no) d
    where a.emp_no = b.emp_no
      and a.emp_no = c.emp_no
+     and b.dept_no = d.dept_no
      and b.to_date = '9999-01-01'
      and c.to_date = '9999-01-01'
-group by dept_no
-having max(c.salary)
+     and c.salary = d.max_salary
 order by c.salary desc;
+    
 
 
 -- 3. 현재, 자신의 부서 평균 급여보다 연봉(salary)이 많은 사원의 사번, 이름과 연봉을 조회하세요 
